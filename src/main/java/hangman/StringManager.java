@@ -12,7 +12,6 @@ public class StringManager {
     }
 
     public String buildHangManString(){
-        System.out.println(plainTextString);     // remove this
         char [] characters = plainTextString.toCharArray();
         hiddenString = "";
         for (int i = 0; i<characters.length; i++){

@@ -1,15 +1,13 @@
 package hangman;
-
 import java.util.Scanner;
-
 public class Game {
 
     private ListManager listManager;
     private StringManager stringManager;
     private Scanner scanner;
-    private String previousGuesses = "";
+    private String previousGuesses;
     private int turns;
-
+    private int lives;
 
     public Game() {
         this.listManager = new ListManager();
@@ -18,55 +16,164 @@ public class Game {
     }
 
     public void play(){
-        while(stringManager.getHiddenString().contains("-")){
+        boolean hasWon = stringManager.getHiddenString().contains("-") ? true : false;
+        while(hasWon){
+            printHangMan(lives);
             showNewTurn();
-            showChallenge();
+            showHangManChallenge();
             System.out.println("Guess a letter:");
             String input = scanner.nextLine();
-          //  if(alreadyPicked(input){ play();}
-            if (input.length() > 1) {
-                System.out.println("only one letter at a time...");
-            }
-            if (alreadyPicked(input)){
-                play();
-            }
-
-            else{
-                stringManager.guessLetter(input);
-                previousGuesses(input);
-                turns++;
-                showTurns();
-                stringManager.remainingLetters();
-            }
-
+                if (input.length() > 1) {
+                    System.out.println("only one letter at a time...");
+                }
+                else{
+                    stringManager.guessLetter(input);
+                    previousGuesses(input);
+                    turns++;
+                    showTurns();
+                    stringManager.remainingLetters();
+                    int consoleHangMan = lives;
+                    printHangMan(consoleHangMan);
+                    lives--;
+                }
         }
+        gameComplete();
+        wholeWithArmsOut();
+    }
+
+    public void printHangMan(int life) {
+        switch (life){
+        case '1':
+            nooseBase();
+        break;
+        case '2'
+        :
+            baseAndStand();
+        break;
+        case '3'
+        :
+            baseAndTop();
+        break;
+        case '4'
+        :
+        topWithRope();
+        break;
+        case '5'
+        :
+            wholeStandWithBody();
+        break;
+        default:
+            printWithTitle();
+        break;
     }
 
 
+    }
     public void previousGuesses(String input){
         previousGuesses += " "+input.toUpperCase();
         System.out.println(previousGuesses);
     }
-
-    public void showChallenge(){
+    public void showHangManChallenge(){
         System.out.println(stringManager.getHiddenString());
     }
-
     public void showTurns(){
         System.out.println(String.format("You've had %s turns!", turns));
     }
-
     public void showNewTurn(){
-        System.out.println("==========HANGMAN==========");
+        System.out.println("\n==**New Turn**==\n");
     }
+    public void printWithTitle() {
+        System.out.println("==HANGMAN==");
+        System.out.println("     |    |");
+        System.out.println("     O    |");
+        System.out.println("    |||   |");
+        System.out.println("     |    |");
+        System.out.println("    / \\  |");
+        System.out.println("         /|");
+        System.out.println("________/_|");
+    }
+    public void wholeWithArmsOut(){
+        System.out.println("==HANGMAN==");
+        System.out.println("      _____");
+        System.out.println("     |    |");
+        System.out.println("     O    |");
+        System.out.println("    ~|~   |");
+        System.out.println("     |    |");
+        System.out.println("    / \\  |");
+        System.out.println("         /|");
+        System.out.println("________/_|");
 
-    public boolean alreadyPicked(String input){
-        if (previousGuesses.contains(input)){
-            System.out.println(String.format("You've chosen %s already, try a different letter...", input));
-            return true;
+
+    }
+    public void wholeStandWithBody(){
+        System.out.println("==HANGMAN==");
+        System.out.println("      _____");
+        System.out.println("     |    |");
+        System.out.println("     O    |");
+        System.out.println("    |||   |");
+        System.out.println("     |    |");
+        System.out.println("    / \\  |");
+        System.out.println("         /|");
+        System.out.println("________/_|");
+
+
+    }
+    public void topWithRope(){
+        System.out.println("==HANGMAN==");
+        System.out.println("      _____");
+        System.out.println("     |    |");
+        System.out.println("     O    |");
+        System.out.println("          |");
+        System.out.println("          |");
+        System.out.println("          |");
+        System.out.println("         /|");
+        System.out.println("________/_|");
+
+
+    }
+    public void baseAndTop(){
+        System.out.println("==HANGMAN==");
+        System.out.println("      _____");
+        System.out.println("          |");
+        System.out.println("          |");
+        System.out.println("          |");
+        System.out.println("          |");
+        System.out.println("          |");
+        System.out.println("         /|");
+        System.out.println("________/_|");
+
+
+    }
+    public void baseAndStand(){
+        System.out.println("==HANGMAN==");
+        System.out.println("           ");
+        System.out.println("          |");
+        System.out.println("          |");
+        System.out.println("          |");
+        System.out.println("          |");
+        System.out.println("          |");
+        System.out.println("         /|");
+        System.out.println("________/_|");
+
+
+    }
+    public void nooseBase() {
+        System.out.println("==HANGMAN==");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("________/_|");
+    }
+    public void gameComplete(){
+        for (int i = 0; i < 5 ; i++) {
+            System.out.println("\n\n\n\n\n");
+            showTurns();
+            printHangMan(5);
+            System.out.println("Game Complete!");
         }
-        return false;
-
     }
-
 }
