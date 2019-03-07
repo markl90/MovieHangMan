@@ -36,8 +36,6 @@ public class Game {
                     turns++;
                     showTurns();
                     stringManager.remainingLetters();
-                    int consoleHangMan = lives;
-                   // printHangMan(consoleHangMan);
                     if(!stringManager.getHiddenString().contains(input)){
                     lives++;}
                 }
@@ -49,12 +47,22 @@ public class Game {
         }
         wholeWithArmsOut();
 
+        retry();
+    }
+
+    public void retry(){
         System.out.println("retry? y/n");
         String input = scanner.nextLine();
 
         if(input.contains("y")){
             Game game2 = new Game();
             game2.play();
+        }
+        if(input.contains("n")){
+            System.out.println("Bye!");;
+        }
+        else{
+            retry();
         }
     }
 
