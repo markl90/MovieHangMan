@@ -48,6 +48,14 @@ public class Game {
             gameComplete();
         }
         wholeWithArmsOut();
+
+        System.out.println("retry? y/n");
+        String input = scanner.nextLine();
+
+        if(input.contains("y")){
+            Game game2 = new Game();
+            game2.play();
+        }
     }
 
     public void checkWin(){
