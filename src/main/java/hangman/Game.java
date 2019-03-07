@@ -7,7 +7,8 @@ public class Game {
     private Scanner scanner;
     private String previousGuesses;
     private int turns;
-    private int lives;
+    private int lives =0;
+    boolean hasWon = false;
 
     public Game() {
         this.listManager = new ListManager();
@@ -16,8 +17,11 @@ public class Game {
     }
 
     public void play(){
-        boolean hasWon = stringManager.getHiddenString().contains("-") ? true : false;
-        while(hasWon){
+
+        while(!hasWon){
+            hasWon = stringManager.getHiddenString().contains("-") ? false : true;
+            if(hasWon){continue;}
+            if(lives==5 && !hasWon){break;}
             printHangMan(lives);
             showNewTurn();
             showHangManChallenge();
@@ -33,32 +37,44 @@ public class Game {
                     showTurns();
                     stringManager.remainingLetters();
                     int consoleHangMan = lives;
-                    printHangMan(consoleHangMan);
-                    lives--;
+                   // printHangMan(consoleHangMan);
+                    if(!stringManager.getHiddenString().contains(input)){
+                    lives++;}
                 }
         }
-        gameComplete();
+        if(lives==5 && !hasWon){
+            System.out.println("GAME OVER");
+        }else {
+            gameComplete();
+        }
         wholeWithArmsOut();
+    }
+
+    public void checkWin(){
+        hasWon = stringManager.getHiddenString().contains("-") ? false : true;
     }
 
     public void printHangMan(int life) {
         switch (life){
-        case '1':
+        case 0:
+            nooseBase();
+            break;
+        case 1:
             nooseBase();
         break;
-        case '2'
+        case 2
         :
             baseAndStand();
         break;
-        case '3'
+        case 3
         :
             baseAndTop();
         break;
-        case '4'
+        case 4
         :
         topWithRope();
         break;
-        case '5'
+        case 5
         :
             wholeStandWithBody();
         break;
@@ -169,11 +185,11 @@ public class Game {
         System.out.println("________/_|");
     }
     public void gameComplete(){
-        for (int i = 0; i < 5 ; i++) {
-            System.out.println("\n\n\n\n\n");
+       // for (int i = 0; i < 5 ; i++) {
+         //   System.out.println("\n\n\n\n\n");
             showTurns();
-            printHangMan(5);
+          //  printHangMan(5);
             System.out.println("Game Complete!");
-        }
+      //  }
     }
 }
